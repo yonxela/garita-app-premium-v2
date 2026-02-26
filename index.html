@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GaritaApp - Control de Visitantes</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Welcome Screen -->
+        <main class="welcome-container" id="homeView">
+            <div class="welcome-content">
+                <div class="brand-logo">
+                    <svg width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                </div>
+                <h1 class="brand-name">GaritaApp</h1>
+                <p class="brand-subtitle">Bienvenido a tu control de visitas</p>
+            </div>
+
+            <div class="welcome-footer">
+                <button type="button" class="submit-btn" id="btnStart">
+                    Ingresar Visita
+                </button>
+                <p class="footer-note">Seguro, rápido y confiable</p>
+            </div>
+        </main>
+
+        <!-- Header (hidden on home) -->
+        <header class="app-header" style="display: none;">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                <h1>GaritaApp</h1>
+                <p>Registro de Visitantes</p>
+            </div>
+            <button class="admin-toggle-btn" id="btnAdminView" type="button">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Vista Garita
+            </button>
+        </header>
+
+        <!-- Main Form Area (hidden on home) -->
+        <main class="form-container" id="formView" style="display: none;">
+            <form id="visitorForm">
+                <div class="form-group">
+                    <label for="neighborName"><span class="emoji">👤</span> Tu Nombre (Vecino)</label>
+                    <input type="text" id="neighborName" placeholder="Ej. Juan Pérez" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="visitorName"><span class="emoji">👋</span> Nombre del Visitante</label>
+                    <input type="text" id="visitorName" placeholder="Ej. María López" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="plates"><span class="emoji">🚗</span> Placas del Vehículo</label>
+                        <input type="text" id="plates" placeholder="Ej. XYZ-1234" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="peopleCount"><span class="emoji">👥</span> Num. de Personas</label>
+                        <div class="number-input">
+                            <button type="button" id="btnMinus">-</button>
+                            <input type="number" id="peopleCount" value="1" min="1" max="10" required>
+                            <button type="button" id="btnPlus">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><span class="emoji">📅</span> ¿Cuándo viene?</label>
+                    <div class="date-chips" id="dateChips">
+                        <button type="button" class="chip active" data-value="today">Hoy</button>
+                        <button type="button" class="chip" data-value="other">Otra fecha</button>
+                        <input type="date" id="visitDate"
+                            style="position: absolute; opacity: 0; pointer-events: none; width: 0;">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span>Registrar Visita</span>
+                    <svg class="spinner" style="display: none;" width="20" height="20" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <style>
+                            .spinner_P7sC {
+                                transform-origin: center;
+                                animation: spinner_svv2 .75s infinite linear
+                            }
+
+                            @keyframes spinner_svv2 {
+                                100% {
+                                    transform: rotate(360deg)
+                                }
+                            }
+                        </style>
+                        <path
+                            d="M10.14,1.16a11,11,0,0,0-9,8.92A1.59,1.59,0,0,0,2.46,12,1.52,1.52,0,0,0,4.11,10.7a8,8,0,0,1,6.66-6.61A1.42,1.42,0,0,0,12,2.69h0A1.57,1.57,0,0,0,10.14,1.16Z"
+                            class="spinner_P7sC" />
+                    </svg>
+                </button>
+            </form>
+        </main>
+
+        <!-- Success Animation Area -->
+        <main class="success-container" id="successView" style="display: none;">
+            <div class="success-icon">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h2><span class="emoji">✅</span> ¡Visita Registrada!</h2>
+            <p>El código de acceso ha sido generado y notificado a garita.</p>
+
+            <div class="ticket">
+                <div class="ticket-row"><span class="label"><span class="emoji">👋</span> Visitante:</span> <span
+                        class="value" id="resVisitor"></span></div>
+                <div class="ticket-row"><span class="label"><span class="emoji">📅</span> Fecha:</span> <span
+                        class="value" id="resDate"></span>
+                </div>
+                <div class="ticket-row"><span class="label"><span class="emoji">🚗</span> Vehículo:</span> <span
+                        class="value" id="resPlates"></span>
+                </div>
+                <div class="ticket-row"><span class="label"><span class="emoji">👥</span> Personas:</span> <span
+                        class="value" id="resCount"></span>
+                </div>
+            </div>
+
+            <button type="button" class="secondary-btn" id="btnNewRegistration">
+                Registrar otro visitante
+            </button>
+        </main>
+
+        <!-- Password Modal -->
+        <div class="modal-overlay" id="passwordModal" style="display: none;">
+            <div class="modal-content">
+                <h3><span class="emoji">🔐</span> Acceso Administrativo</h3>
+                <div class="form-group" style="margin-top: 1rem;">
+                    <input type="password" id="adminPassword" placeholder="Ingrese clave" required>
+                </div>
+                <p id="passwordError" style="color: #ef4444; font-size: 0.85rem; margin-top: 0.5rem; display: none;">
+                    Clave incorrecta.</p>
+                <div class="modal-actions" style="display: flex; gap: 1rem; margin-top: 1.5rem;">
+                    <button type="button" class="secondary-btn" id="btnCancelAdmin"
+                        style="margin-top: 0;">Cancelar</button>
+                    <button type="button" class="submit-btn" id="btnSubmitAdmin"
+                        style="margin-top: 0;">Ingresar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin View Area -->
+        <main class="admin-container" id="adminView" style="display: none;">
+            <div class="admin-header">
+                <h2><span class="emoji">📋</span> Visitas Autorizadas</h2>
+                <button type="button" class="btn-close" id="btnCloseAdmin">&times;</button>
+            </div>
+            <div class="visits-list" id="visitsList">
+                <!-- Visitas injected by JS -->
+            </div>
+            <button type="button" class="secondary-btn" id="btnClearVisits"
+                style="margin-top: 1rem; color: #ef4444; border-color: rgba(239, 68, 68, 0.3);">
+                <span class="emoji">🗑️</span> Limpiar Historial
+            </button>
+        </main>
+    </div>
+
+    <footer class="corporate-footer">
+        Software desarrollado por <strong>SISDEL INTERNATIONAL</strong> &copy; 2026 &reg;
+        <br>
+        <span style="font-size: 0.65rem; opacity: 0.7;">1200 Brickell Ave, Miami, FL</span>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
